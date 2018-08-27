@@ -1,4 +1,4 @@
-from flask import request, make_response, send_file
+from flask import request, make_response, send_file, jsonify
 from werkzeug.utils import secure_filename
 import os
 import csv
@@ -79,7 +79,7 @@ def save_json():
 def getLeakageAnalysis(path):
 
 	with open(path, encoding='utf-8') as data_file:
-	    data = json.loads(data_file.read())
+		data = json.loads(data_file.read())
 	df = pd.DataFrame(data)
 	# creating column with average consommation for 3 last hours
 	df['consoRolling'] = df['consommation'].rolling(window=3).mean()
@@ -92,28 +92,29 @@ def getLeakageAnalysis(path):
 	potentialLeak = []
 	x = 0
 	while x < (len(df)):
-	    if df['leakage'][x]:
-	        n = x
-	        i = 0
-	        while df['leakage'][n+1]:
+		if df['leakage'][x]:
+			n = x
+			i = 0
+			while df['leakage'][n+1]:
 
-	            n+=1
-	            x+=1
-	            i+= 1
-	        
-	        oneLeak= df.iloc[x-2-i:n+1].drop(columns=['consoRolling', 'leakage'])
-	        leakDict = oneLeak.to_dict('records')
-	        
-	        potentialLeak.append(leakDict)
-	        
-	    x+=1	
+				n+=1
+				x+=1
+				i+= 1
+
+			oneLeak= df.iloc[x-2-i:n+1].drop(columns=['consoRolling', 'leakage'])
+			leakDict = oneLeak.to_dict('records')
+			for j in range(len(leakDict)):
+				leakDict[j] = { k:int(v) for k,v in leakDict[j].items() }
+
+			potentialLeak.append(leakDict)
+
+		x += 1
 
 	# create dictionary of lines to save
-	leakToSave = pd.Series(potentialLeak).to_json(orient='values')
-
+	#leakToSave = pd.Series(potentialLeak).to_json(orient='values')
 	jsonUrl = 'output/data_leakage_natacha.json' 
 	with open(jsonUrl, 'w') as outfile:  
-		json.dump(leakToSave, outfile, indent=4)
+		json.dump(potentialLeak, outfile, indent=1)
 
 	return potentialLeak, jsonUrl
 
