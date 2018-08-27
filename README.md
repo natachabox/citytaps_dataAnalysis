@@ -21,6 +21,8 @@ git remote add origin https://github.com/natachabox/citytaps_dataAnalysis.git
 
 ### Install requirements
 
+Install python : https://www.python.org/downloads/
+
 ```shell
 $ pip install -r requirements.txt
 ```
@@ -36,6 +38,7 @@ Make sure you have the following installed:
 
 Python 3.6 is supported and tested.
 
+
 ```shell
 $ python app.py
 ```
@@ -46,9 +49,9 @@ Open http://localhost:8080 and test app. :smiley:
 
 ------------------
 
-## if you don't have python installed :
+## if you want to use virtualenv :
 
-You can use virtualenv :
+Install python : https://www.python.org/downloads/
 
 ### Install virtualenv via pip:
 
