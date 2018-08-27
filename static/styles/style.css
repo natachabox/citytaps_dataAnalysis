@@ -1,0 +1,92 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f7fa;
+}
+
+
+/*****************************************
+Nav bar
+******************************************/
+.navbar {
+    height: 80px;
+    box-shadow: 0 2px 5px 0 #ccd2db;
+}
+
+#mainNav {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: #00a4a7;
+}
+
+.navbar {
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    color: white;
+    font-size: 24px;
+}
+
+.navbar a {
+    color: white;
+}
+
+.navbar li {
+    display: inline-block;
+    margin: 15px;
+}
+
+
+/*****************************************
+Content title
+******************************************/
+
+
+h3 {
+    margin-left: -4%;
+}
+
+
+.row table {
+    margin-top: 65px;
+}
+
+
+/*****************************************
+home
+******************************************/
+
+.homeNav li {
+    display: inline-block;
+    margin: 5% 10%;
+}
+
+.homeNav a .btn {
+    font-size: 24px;
+}
+
+
+/*****************************************
+user profile 
+******************************************/
+
+.userChart img {
+    object-fit: contain;
+    max-width: 90%;
+    margin-left: 5%; 
+}
+
+/*****************************************
+potential leakage
+******************************************/
+
+#leakTable table {
+    margin-top: 40px;
+}
+
+#leakTable {
+    margin-bottom: 50px;
+}

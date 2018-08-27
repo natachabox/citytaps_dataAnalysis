@@ -1,0 +1,49 @@
+{% extends "header.html" %}
+
+
+
+{% block content %}
+
+
+
+	<div class="row">
+	    <div class="col-md-8 col-md-offset-2">
+	    	<h3>Potential Leakage</h3>
+	    </div>
+	</div>
+
+
+	<div id="leakTable">
+  	{% for leakdic in leakage %}
+		<table>
+			<thead>
+				<tr>
+					<td>Consommation</td>
+					<td>Heure</td>
+					<td>Jour</td>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for leak in leakdic %}
+				<tr>
+					{% for k,v in leak.items() %}
+					<td>{{ v }}</td>
+					{% endfor %}
+
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+  	{% endfor %}
+  	</div>
+
+
+	<div class="row">
+	    <div class="col-md-8 col-md-offset-2">
+	    	<h4>Potential leakages have been saved under : {{ jsonUrl }} </h4>
+	    </div>
+	</div>
+
+{% endblock %}
