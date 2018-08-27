@@ -21,6 +21,7 @@ def save_csv():
             basepath, 'uploads', secure_filename(f.filename))
         f.save(file_path)
 
+        #get the file url
         def change_path(path):
             return path.replace("\\", "/")
 
@@ -31,27 +32,24 @@ def save_csv():
 
 def getHourlyAnalysis(path):
 
+	#create dataframe from csv
 	df = pd.read_csv(path)
-	print('etape1', df)
 	df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
-	print('etape2', df)
 	df = df.set_index('timestamp')
-	print('etape3', df)
+	#resample one ourly basis 'H', and grouby hour and take average
 	hourdf = df.resample('H').sum()
-	print('etape4', hourdf)
 	hourdfavg = hourdf.groupby(hourdf.index.hour).mean()
-	print('etape5', hourdfavg)
 
+	# create plot
 	plt.rcParams['figure.figsize'] = 20,5
 	plt.xlabel('Hour', fontsize=16)
 	plt.ylabel('Consumption in Liters', fontsize=16)
 	plt.title('Barchart - Mean consumption per Hour',fontsize=20)
 	plt.bar(hourdfavg.index, hourdfavg['consumption'])
-	print('etape6')
+
+	#save plot
 	url = "static/images/userplot.png"
-	print('etape7')
 	plt.savefig(url)
-	print('etape_')
 
 	return url
 
@@ -89,7 +87,8 @@ def getLeakageAnalysis(path):
 	df['leakage'] = 0
 	for i in range(2, len(df)):
 		df['leakage'][i] = (df['consommation'][i] >= 15 and df['consommation'][i-1] >= 15 and df['consommation'][i-2] >= 15)
-    
+   
+   	#storing potential leak lines 
 	potentialLeak = []
 	x = 0
 	while x < (len(df)):
@@ -109,6 +108,7 @@ def getLeakageAnalysis(path):
 	        
 	    x+=1	
 
+	# create dictionary of lines to save
 	leakToSave = pd.Series(potentialLeak).to_json(orient='values')
 
 	jsonUrl = 'output/data_leakage_natacha.json' 
